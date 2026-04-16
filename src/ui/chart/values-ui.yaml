@@ -6,9 +6,9 @@
 # IMAGE CONFIGURATION
 # ----------------------------------------------------------------------------
 image:
-  repository: 180789647333.dkr.ecr.us-east-1.amazonaws.com/retail-store/ui
+  repository: docker.io/devopsinfra56/retail-store-ui
   pullPolicy: IfNotPresent
-  tag: sha-24dab79
+  tag: sha-23f3437
 
 # ----------------------------------------------------------------------------
 # APPLICATION CONFIGURATION
