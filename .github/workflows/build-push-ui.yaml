@@ -115,11 +115,25 @@ jobs:
           echo "IMAGE_BASE=$IMAGE_BASE" >> $GITHUB_ENV
           echo "TAGS=latest $SHA_TAG" >> $GITHUB_ENV
 
-      - name: Build and push Docker images
+      - name: Build Docker images
         run: |
           for tag in $TAGS; do
             IMAGE_URI="$IMAGE_BASE:$tag"
             docker build -t $IMAGE_URI src/ui
+          done
+
+      - name: Scan Docker images with Trivy
+        run: |
+          for tag in $TAGS; do
+            IMAGE_URI="$IMAGE_BASE:$tag"
+            echo "Scanning $IMAGE_URI"
+            docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest --exit-code 1 --severity HIGH,CRITICAL $IMAGE_URI
+          done
+
+      - name: Push Docker images
+        run: |
+          for tag in $TAGS; do
+            IMAGE_URI="$IMAGE_BASE:$tag"
             docker push $IMAGE_URI
           done
 
