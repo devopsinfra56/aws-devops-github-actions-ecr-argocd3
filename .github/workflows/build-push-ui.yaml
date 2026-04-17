@@ -182,12 +182,10 @@ on:
             echo "IMAGE_BASE=$IMAGE_BASE" >> $GITHUB_ENV
             echo "SHA_TAG=$SHA_TAG" >> $GITHUB_ENV
 
-        # 🐳 Build image (single tag first)
         - name: Build Docker image
           run: |
             docker build -t $IMAGE_BASE:$SHA_TAG src/ui
 
-        # 🔐 Trivy Scan (FAIL on HIGH/CRITICAL)
         - name: Run Trivy vulnerability scan
           uses: aquasecurity/trivy-action@0.20.0
           with:
@@ -196,7 +194,6 @@ on:
             exit-code: 1
             severity: CRITICAL,HIGH
 
-        # 🚀 Push only if scan passes
         - name: Push Docker images
           run: |
             docker tag $IMAGE_BASE:$SHA_TAG $IMAGE_BASE:latest
@@ -223,4 +220,3 @@ on:
 
         - name: Done
           run: echo "Success"
-          
