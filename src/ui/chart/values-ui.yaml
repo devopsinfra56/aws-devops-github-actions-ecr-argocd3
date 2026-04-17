@@ -8,7 +8,7 @@
 image:
   repository: docker.io/devopsinfra56/retail-store-ui
   pullPolicy: IfNotPresent
-  tag: sha-23f3437
+  tag: sha-c62a07b
 
 # ----------------------------------------------------------------------------
 # APPLICATION CONFIGURATION
